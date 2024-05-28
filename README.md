@@ -1,6 +1,6 @@
 # Urimancy
 
-*The art of unbreakable references.*
+URI Stores for unbreakable references a.k.a. *The art of unbreakable references.*
 
 ## Motivation
 Naming things is famously "one of the hard problems" in computer science.
