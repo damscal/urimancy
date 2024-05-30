@@ -15,6 +15,18 @@ while databases can take care of the retrieval part (searching, browsing or quer
 
 ## Core concept
 
+- You associate a directory (or a set of directories) 'D' with an Urimancy Store 'S'. Urimancy will start monitoring 'D' for filesystem changes.
+- You place a file or a folder 'F' into the directory 'D' monitored by the Urimancy service daemon.
+- The file/folder 'F' dets copied in the associated Urimancy Store 'S'.
+- The file/folder 'F' in the directory 'D' gets replaced by a link 'L'.
+- You are free to rename, copy, move or delete the link 'L', as well as the content of the file/folder 'F'.
+- If you don't need 'L' anymore...
+  - you can just delete it.
+- If you don't need 'F' anymore...
+  - Delete all links pointing to 'F'. 'F' will be automatically deleted at that point. You also have the option to delete 'F' along with all links pointing to it with one advanced command.
+- As long 'F' exists, it will always be accessible via its static path in its Urimancy Store.
+  - Urimancy Stores also can record tags and other files' metadata providing a backbone for advanced browsing, searching and querying interfaces.
+
 ```mermaid
 flowchart 
   node_1("You place a file or a folder 'F'<br> into the directory 'D'<br> monitored by the Urimancy service daemon.")
@@ -26,7 +38,7 @@ flowchart
   node_7("If you don#39;t need <br>#39;F#39; anymore...")
   node_8("Delete all links pointing to #39;F#39;.<br> #39;F#39; will be automatically<br>deleted at that point.<br>You also have the option to delete #39;F#39;<br> along with all links pointing to it<br>with one advanced command.")
   node_10("As long #39;F#39; exists,<br> it will always be accessible <br> via its static path<br> in its Urimancy Store.")
-  node_11["You associate a directory (or a set of directories) with an Urimancy Store 'S'.<br> Urimancy will start monitoring 'D' for filesystem changes."]
+  node_11["You associate a directory (or a set of directories) 'D' with an Urimancy Store 'S'.<br> Urimancy will start monitoring 'D' for filesystem changes."]
   node_12["Urimancy Stores also can record tags<br> and other files' metadata,<br> providing a backbone for advanced browsing,<br> searching and querying interfaces."]
   node_1 --> node_2
   node_2 --> node_3
