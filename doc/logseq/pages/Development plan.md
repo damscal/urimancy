@@ -4,13 +4,20 @@
 	  logseq.order-list-type:: number
 	- DONE Identify the [[key stakeholders]].
 	  logseq.order-list-type:: number
-	- TODO Document the functional and non-functional requirements.
+	- DONE Document the [[functional and non-functional requirements]] .
 	  logseq.order-list-type:: number
+	  :LOGBOOK:
+	  CLOCK: [2024-05-31 Fri 09:15:38]--[2024-05-31 Fri 09:15:40] =>  00:00:02
+	  :END:
 - System Design:
   logseq.order-list-type:: number
-	- LATER Design the [[architecture of the Urimancy system]]
+	- DONE Design the [[architecture of the Urimancy system]]
 	  logseq.order-list-type:: number
-	- LATER Define the [[structure of the Urimancy Store]]
+	  :LOGBOOK:
+	  CLOCK: [2024-05-31 Fri 10:02:53]--[2024-05-31 Fri 15:35:58] =>  05:33:05
+	  CLOCK: [2024-05-31 Fri 15:35:59]--[2024-05-31 Fri 16:22:15] =>  00:46:16
+	  :END:
+	- DONE Define the [[structure of the Urimancy Store]]
 	  logseq.order-list-type:: number
 	- LATER Design the [[mechanism for monitoring changes in associated directories]]
 	  logseq.order-list-type:: number
