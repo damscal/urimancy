@@ -1,32 +1,33 @@
-- ## Functional Requirements
+## Functional Requirements
 	- **File Management:**
-		- Monitor designated directories for file additions, deletions, and modifications.
-		- Store files securely within a dedicated Urimancy Store.
-		- Files deduplication: if a new file is added, but its contents are identical to another already existing in the Urimancy Store, do not perform another copy and provide a link to the copy that is already existing.
+		- Monitor designated directories for file additions, deletions, and metadata modifications.
+		- Store files securely within dedicated Urimancy Stores.
 		- Replace original files with symbolic links pointing to their location in the Urimancy Store.
-		-  Access files through their corresponding links.
-		-  Delete links without affecting the original file in the Urimancy Store.
-		-  Delete a file along with all associated links when no links remain.
-		-  Manage metadata (tags, descriptions) for files stored in the Urimancy Store.
+		- Files deduplication: if a new file is added, but its contents are identical to another already existing in the Urimancy Store, do not perform another copy and provide a link to the copy that is already existing.
+		- Delete links without affecting the original file in the Urimancy Store.
+		- Garbage collection: Delete a file along with all associated links when no links remain.
+		- Manage metadata (tags, descriptions) for files stored in the Urimancy Store.
 	- **Search and Access:**
-		-  Integrate with external databases to enable searching and browsing files based on metadata and other criteria.
-		-  Implement access control mechanisms to restrict access to Urimancy Stores based on user permissions.
+		- Integrate with external databases to enable searching and querying files based on metadata.
+		- Virtual filesystem for browsing files (tagsistant-inspired)
+		- Implement access control mechanisms to restrict access to Urimancy Stores based on user permissions.
 - ## Non-Functional Requirements
+  collapsed:: true
 	- **Performance:**
-		-  File access through links should have minimal performance overhead compared to directly accessing files.
-		-  The Urimancy Store should scale efficiently to handle large file sets.
-		-  Garbage collection should be efficient to avoid storing unused files.
+		- File access through links should have minimal performance overhead compared to directly accessing files.
+		- The Urimancy Store should scale efficiently to handle large file sets.
+		- Garbage collection should be efficient to avoid storing unused files.
 	- **Security:**
-		-  The Urimancy Store should be resistant to unauthorized access and data corruption.
-		-  Implement secure mechanisms for user authentication and authorization.
+		- The Urimancy Store should be resistant to unauthorized access and data corruption.
+		- Implement secure mechanisms for user authentication and authorization.
 	- **Reliability:**
-		-  The Urimancy service should be highly available with minimal downtime.
-		-  Implement robust error handling for file system changes, storage issues, and link management.
+		- The Urimancy service should be highly available with minimal downtime.
+		- Implement robust error handling for file system changes, storage issues, and link management.
 	- **Usability:**
-		-  Develop a user-friendly CLI for interacting with Urimancy features.
-		-  (Optional) Provide a GUI application for managing Urimancy stores and accessing files.
+		- Develop a user-friendly CLI for interacting with Urimancy features.
+		- (Optional) Provide a GUI application for managing Urimancy stores and accessing files.
 	- **Maintainability:**
-		- **NFR-10:** The codebase should be well-documented, modular, and easy to understand for future maintenance.
-		- **NFR-11:** Implement unit and integration tests for all functionalities.
+		- The codebase should be well-documented, modular, and easy to understand for future maintenance.
+		- Implement unit and integration tests for all functionalities.
 	- **Deployment:**
-		- **NFR-12:**  Define deployment options (standalone application, library, service) based on target users and use cases.
+		- Define deployment options (standalone application, library, service) based on target users and use cases.

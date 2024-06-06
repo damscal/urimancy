@@ -1,8 +1,7 @@
 # Stores
 - ## Positioning and Naming Urimancy stores
-  
-  Urimancy stores can be initialized anywhere the user has write access to. However, once a store is placed and used, it cannot be moved or renamed without inevitably breaking all the references that rely on that store.  
-  By default, Urimancy stores are placed in `~/.urimancy` for user instances and/or `/etc/urimancy` for system instances.
+- Urimancy stores can be initialized anywhere the user has write access to. However, once a store is placed and used, it cannot be moved or renamed without inevitably breaking all the references that rely on that store. For this reasons, stored files are read-only.
+- By default, Urimancy stores are placed in `~/.urimancy` for user instances and/or `/etc/urimancy` for system instances.
   
   Similarly, stores can be given any name, but that name should not be changed afterwards.  
   By default, stores that share the same location are named progressively as `store-1`, `store-2`, etc.
