@@ -1,39 +1,32 @@
-## Urimancy Functional Requirements
-
-**File Management:**
-- **FR-1:** Monitor designated directories for file additions, deletions, and modifications.
-- **FR-2:** Store files securely within a dedicated Urimancy Store.
-- **FR-3:** Replace original files with symbolic links pointing to their location in the Urimancy Store.
-- **FR-4:** Access files through their corresponding links.
-- **FR-5:** Delete links without affecting the original file in the Urimancy Store.
-- **FR-6:** Delete a file along with all associated links when no links remain.
-- **FR-7:** Manage metadata (tags, descriptions) for files stored in the Urimancy Store.
-- Files deduplication: if a new file is added, but it is identical to another already existing in the Urimancy Store, do not perform another copy and provide a link to the copy that is already existing.
-- **Search and Access:**
-- **FR-8:** Integrate with external databases to enable searching and browsing files based on metadata and other criteria.
-- **FR-9:** Implement access control mechanisms to restrict access to Urimancy Stores based on user permissions.
-- ## Urimancy Non-Functional Requirements
-  
-  **Performance:**
-- **NFR-1:** File access through links should have minimal performance overhead compared to directly accessing files.
-- **NFR-2:** The Urimancy Store should scale efficiently to handle large file sets.
-- **NFR-3:** Garbage collection should be efficient to avoid storing unused files.
-  
-  **Security:**
-- **NFR-4:** The Urimancy Store should be resistant to unauthorized access and data corruption.
-- **NFR-5:** Implement secure mechanisms for user authentication and authorization.
-  
-  **Reliability:**
-- **NFR-6:** The Urimancy service should be highly available with minimal downtime.
-- **NFR-7:** Implement robust error handling for file system changes, storage issues, and link management.
-  
-  **Usability:**
-- **NFR-8:** Develop a user-friendly CLI for interacting with Urimancy features.
-- **NFR-9:** (Optional) Provide a GUI application for managing Urimancy stores and accessing files.
-  
-  **Maintainability:**
-- **NFR-10:** The codebase should be well-documented, modular, and easy to understand for future maintenance.
-- **NFR-11:** Implement unit and integration tests for all functionalities.
-  
-  **Deployment:**
-- **NFR-12:**  Define deployment options (standalone application, library, service) based on target users and use cases.
+- ## Functional Requirements
+	- **File Management:**
+		- Monitor designated directories for file additions, deletions, and modifications.
+		- Store files securely within a dedicated Urimancy Store.
+		- Files deduplication: if a new file is added, but its contents are identical to another already existing in the Urimancy Store, do not perform another copy and provide a link to the copy that is already existing.
+		- Replace original files with symbolic links pointing to their location in the Urimancy Store.
+		-  Access files through their corresponding links.
+		-  Delete links without affecting the original file in the Urimancy Store.
+		-  Delete a file along with all associated links when no links remain.
+		-  Manage metadata (tags, descriptions) for files stored in the Urimancy Store.
+	- **Search and Access:**
+		-  Integrate with external databases to enable searching and browsing files based on metadata and other criteria.
+		-  Implement access control mechanisms to restrict access to Urimancy Stores based on user permissions.
+- ## Non-Functional Requirements
+	- **Performance:**
+		-  File access through links should have minimal performance overhead compared to directly accessing files.
+		-  The Urimancy Store should scale efficiently to handle large file sets.
+		-  Garbage collection should be efficient to avoid storing unused files.
+	- **Security:**
+		-  The Urimancy Store should be resistant to unauthorized access and data corruption.
+		-  Implement secure mechanisms for user authentication and authorization.
+	- **Reliability:**
+		-  The Urimancy service should be highly available with minimal downtime.
+		-  Implement robust error handling for file system changes, storage issues, and link management.
+	- **Usability:**
+		-  Develop a user-friendly CLI for interacting with Urimancy features.
+		-  (Optional) Provide a GUI application for managing Urimancy stores and accessing files.
+	- **Maintainability:**
+		- **NFR-10:** The codebase should be well-documented, modular, and easy to understand for future maintenance.
+		- **NFR-11:** Implement unit and integration tests for all functionalities.
+	- **Deployment:**
+		- **NFR-12:**  Define deployment options (standalone application, library, service) based on target users and use cases.
