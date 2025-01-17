@@ -22,7 +22,7 @@
       in {
         packages.default = pkgs.stdenv.mkDerivation {
           name = "urimancy";
-          version = "0.0.1";
+          version = "0.1.0";
           src = ./.;
 
           buildInputs = [
