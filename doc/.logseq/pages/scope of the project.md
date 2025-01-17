@@ -1,1 +1,0 @@
-- solving the problem of maintaining unbreakable references to files and directories. Doing so by separating the concerns of storage (handled by a simple, static hierarchy) and retrieval (handled by a database).

@@ -15,39 +15,69 @@ while databases can take care of the retrieval part (searching, browsing or quer
 
 ## Core concept
 
-- You associate a directory (or a set of directories) 'D' with an Urimancy Store 'S'. Urimancy will start monitoring 'D' for filesystem changes.
-- You place a file or a folder 'F' into the directory 'D' monitored by the Urimancy service daemon.
-- The file/folder 'F' dets copied in the associated Urimancy Store 'S'.
+- You associate a directory 'D' with an Urimancy Store 'S'. Urimancy will start monitoring 'D' for filesystem changes.
+- You place a file or a folder 'F' into the directory 'D' monitored by Urimancy.
+- The file/folder 'F' gets copied in the associated Urimancy Store 'S'.
 - The file/folder 'F' in the directory 'D' gets replaced by a link 'L'.
 - You are free to rename, copy, move or delete the link 'L', as well as the content of the file/folder 'F'.
 - If you don't need 'L' anymore...
   - you can just delete it.
 - If you don't need 'F' anymore...
-  - Delete all links pointing to 'F'. 'F' will be automatically deleted at that point. You also have the option to delete 'F' along with all links pointing to it with one advanced command.
+  - Delete the target of 'L'. Then delete all links pointing to 'F'.
 - As long 'F' exists, it will always be accessible via its static path in its Urimancy Store.
-  - Urimancy Stores also can record tags and other files' metadata providing a backbone for advanced browsing, searching and querying interfaces.
 
-```mermaid
-flowchart 
-  node_1("You place a file or a folder 'F'<br> into the directory 'D'<br> monitored by the Urimancy service daemon.")
-  node_2("The file/folder 'F' gets copied in the associated Urimancy Store 'S'")
-  node_3("The file/folder 'F' in the directory 'D'<br> gets replaced by a link 'L'.")
-  node_4("You are free to rename, copy, move or delete the link 'L',<br> as well as the content of the file/folder 'F'.")
-  node_5("If you don#39;t need <br> #39;L#39; anymore...")
-  node_6("You can just<br> delete it.")
-  node_7("If you don#39;t need <br>#39;F#39; anymore...")
-  node_8("Delete all links pointing to #39;F#39;.<br> #39;F#39; will be automatically<br>deleted at that point.<br>You also have the option to delete #39;F#39;<br> along with all links pointing to it<br>with one advanced command.")
-  node_10("As long #39;F#39; exists,<br> it will always be accessible <br> via its static path<br> in its Urimancy Store.")
-  node_11["You associate a directory (or a set of directories) 'D' with an Urimancy Store 'S'.<br> Urimancy will start monitoring 'D' for filesystem changes."]
-  node_12["Urimancy Stores also can record tags<br> and other files' metadata,<br> providing a backbone for advanced browsing,<br> searching and querying interfaces."]
-  node_1 --> node_2
-  node_2 --> node_3
-  node_3 --> node_4
-  node_4 --> node_5
-  node_5 --> node_6
-  node_4 --> node_7
-  node_7 --> node_8
-  node_4 --> node_10
-  node_11 --> node_1
-  node_10 --> node_12
+## Install
+
+_If using nix flakes (recommended)..._
+
+1. add `urimancy.url = "github:damscal/urimancy";` to your `flake.nix`'s inputs.
+2. add `inputs.urimancy.packages.${pkgs.system}.default` either to your `environment.systemPackages` list (for system-wide installation) or your `home.packages`list (to install via home-manager)
+
+_If not using flakes..._
+
+```
+git clone https://github.com/damscal/urimancy.git
+cd urimancy
+nix build
+nix profile install .
+```
+
+## Usage:
+
+Drop any file (or a directory, or even a symlink) into the configurable `WATCH_DIR` folder.
+
+Two things will happen:
+1. The file will be moved into a subdirectory of the `STATIC_DIR` folder, organized by date and time of processing;
+1. In `WATCH_DIR`, you get a new absolute symlink pointing to the original file's new location
+
+```
+usage: urimancy [-h] [-w WATCH_DIR] [-s STATIC_DIR]
+
+Urimancy: Watch a directory and organize dropped files with symlinks
+
+options:
+  -h, --help            show this help message and exit
+  -w WATCH_DIR, --watch-dir WATCH_DIR
+                        Directory to watch for new files (default: drophere)
+  -s STATIC_DIR, --static-dir STATIC_DIR
+                        Directory where files will be stored (default: static)
+```
+
+## Automation
+
+Urimancy instances can be automated as systemd user services. Home-manager example:
+
+```
+  systemd.user.services = 
+    {
+      urimancy-local_drive = {
+        Unit.Description = "Executing urimancy daemon in local drive";
+        Install.WantedBy = ["default.target"];
+        Service = {
+          ExecStart = "${lib.getExe' pkgs.urimancy "urimancy"} -w /PATH/TO/LOCAL_DRIVE/WATCH_FOLDER -s /PATH/TO/LOCAL_DRIVE/STORE_FOLDER";
+          Type = "oneshot";
+          RemainAfterExit = true;
+        };
+      };
+    };
 ```
