@@ -15,7 +15,6 @@ class UrimancyHandler(FileSystemEventHandler):
     def __init__(self, watch_dir: Path, static_dir: Path):
         self.watch_dir = Path(watch_dir)
         self.static_dir = Path(static_dir)
-        self.our_symlinks = set()
 
     def encode_filename(self, filename: str) -> str:
         """URL encode the filename for storage."""
@@ -49,9 +48,9 @@ class UrimancyHandler(FileSystemEventHandler):
 
     def on_created(self, event):
         src_path = Path(event.src_path)
-        
-        # Ignore if this is one of our symlinks
-        if src_path in self.our_symlinks:
+            
+        # Ignore symlinks entirely
+        if os.path.islink(src_path):
             return
             
         original_name = src_path.name
@@ -65,20 +64,12 @@ class UrimancyHandler(FileSystemEventHandler):
             dest_dir.mkdir(parents=True, exist_ok=True)
             dest_path = dest_dir / new_filename
 
-            # Handle different types of files
-            if os.path.islink(src_path):
-                # For symlinks, copy the link itself
-                link_target = os.readlink(src_path)
-                print(f"Processing symlink: {original_name} -> {link_target}")
-                os.remove(src_path)  # Remove original symlink
-                os.symlink(link_target, dest_path)  # Recreate symlink in new location
-            elif os.path.isdir(src_path):
-                # For directories, copy the entire directory tree
+            # Handle files and directories
+            if os.path.isdir(src_path):
                 print(f"Processing directory: {original_name}")
                 shutil.copytree(src_path, dest_path)
                 shutil.rmtree(src_path)
             else:
-                # For regular files
                 print(f"Processing file: {original_name}")
                 shutil.move(str(src_path), str(dest_path))
 
@@ -88,7 +79,6 @@ class UrimancyHandler(FileSystemEventHandler):
             if symlink_path.exists() or os.path.islink(symlink_path):
                 os.remove(symlink_path)
             os.symlink(dest_path.absolute(), symlink_path)
-            self.our_symlinks.add(symlink_path)
             print(f"Created symlink: {symlink_path} -> {dest_path}")
 
         except Exception as e:
@@ -97,7 +87,7 @@ class UrimancyHandler(FileSystemEventHandler):
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description='Urimancy: Watch a directory and organize dropped files, directories, and symlinks',
+        description='Urimancy: Watch a directory and organize files and directories',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     parser.add_argument(
@@ -128,7 +118,7 @@ def main():
 
     print(f"Watching directory: {watch_dir}")
     print(f"Static directory: {static_dir}")
-    print("Ready to process files, directories, and symlinks...")
+    print("Ready to process files and directories (symlinks will be ignored)...")
 
     # Initialize the event handler and observer
     event_handler = UrimancyHandler(watch_dir, static_dir)
