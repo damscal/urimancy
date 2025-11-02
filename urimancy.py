@@ -78,7 +78,7 @@ class UrimancyHandler(FileSystemEventHandler):
             symlink_path = self.watch_dir / symlink_name
             if symlink_path.exists() or os.path.islink(symlink_path):
                 os.remove(symlink_path)
-            os.symlink(dest_path.absolute(), symlink_path)
+            os.symlink(dest_path, symlink_path) ## os.symlink(dest_path.absolute(), symlink_path)
             print(f"Created symlink: {symlink_path} -> {dest_path}")
 
         except Exception as e:
@@ -100,7 +100,7 @@ def parse_args():
         '-s', '--static-dir',
         type=str,
         default='static',
-        help='Directory where items will be stored'
+        help='Absolute path of the directory where items will be stored'
     )
     return parser.parse_args()
 
@@ -110,7 +110,9 @@ def main():
 
     # Convert to absolute paths
     watch_dir = Path(args.watch_dir).absolute()
-    static_dir = Path(args.static_dir).absolute()
+    ## static_dir = Path(args.static_dir).absolute()
+
+    static_dir = Path(args.static_dir)
 
     # Create directories if they don't exist
     watch_dir.mkdir(exist_ok=True)
